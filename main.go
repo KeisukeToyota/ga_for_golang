@@ -1,10 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"sort"
 	"time"
+
+	"github.com/k0kubun/pp"
 )
 
 type Gene int
@@ -67,7 +68,7 @@ func GetPopulation(geneLen int, indLen int) Population {
 }
 
 func main() {
-	population := GetPopulation(10, 100)
+	population := GetPopulation(10, 10)
 	population.Evaluate()
-	fmt.Println(population)
+	pp.Println(population)
 }
