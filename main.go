@@ -30,13 +30,28 @@ func (p Population) Less(i, j int) bool {
 	return p[i].Fitness < p[j].Fitness
 }
 
-func GetPopulation(geneLength int, individualLength int) Population {
+func (p Population) CalcFitness() {
+	for i := 0; i < p.Len(); i++ {
+		r := 0
+		for _, gene := range p[i].Genes {
+			r += int(gene)
+		}
+		p[i].Fitness = r
+	}
+}
+
+func (p Population) Evaluate() {
+	p.CalcFitness()
+	sort.Sort(sort.Reverse(p))
+}
+
+func GetPopulation(geneLen int, indLen int) Population {
 	rand.Seed(time.Now().UnixNano())
 	var population Population
 
-	for i := 0; i < individualLength; i++ {
+	for i := 0; i < indLen; i++ {
 		var genes Genes
-		for j := 0; j < geneLength; j++ {
+		for j := 0; j < geneLen; j++ {
 			genes = append(genes, Gene(rand.Intn(2)))
 		}
 		population = append(population, Individual{
@@ -45,21 +60,6 @@ func GetPopulation(geneLength int, individualLength int) Population {
 		})
 	}
 	return population
-}
-
-func (ind Individual) CalcFitness() int {
-	r := 0
-	for _, gene := range ind.Genes {
-		r += int(gene)
-	}
-	return r
-}
-
-func (p Population) Evaluate() {
-	for i := 0; i < p.Len(); i++ {
-		p[i].Fitness = p[i].CalcFitness()
-	}
-	sort.Sort(sort.Reverse(p))
 }
 
 func main() {
