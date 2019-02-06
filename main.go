@@ -45,6 +45,10 @@ func (p Population) Evaluate() {
 	sort.Sort(sort.Reverse(p))
 }
 
+func (p Population) Crossover() {
+
+}
+
 func GetPopulation(geneLen int, indLen int) Population {
 	rand.Seed(time.Now().UnixNano())
 	var population Population
